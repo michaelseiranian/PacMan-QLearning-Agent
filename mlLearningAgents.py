@@ -1,27 +1,3 @@
-# mlLearningAgents.py
-# parsons/27-mar-2017
-#
-# A stub for a reinforcement learning agent to work with the Pacman
-# piece of the Berkeley AI project:
-#
-# http://ai.berkeley.edu/reinforcement.html
-#
-# As required by the licensing agreement for the PacMan AI we have:
-#
-# Licensing Information:  You are free to use or extend these projects for
-# educational purposes provided that (1) you do not distribute or publish
-# solutions, (2) you retain this notice, and (3) you provide clear
-# attribution to UC Berkeley, including a link to http://ai.berkeley.edu.
-#
-# Attribution Information: The Pacman AI projects were developed at UC Berkeley.
-# The core projects and autograders were primarily created by John DeNero
-# (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
-# Student side autograding was added by Brad Miller, Nick Hay, and
-# Pieter Abbeel (pabbeel@cs.berkeley.edu).
-
-# This template was originally adapted to KCL by Simon Parsons, but then
-# revised and updated to Py3 for the 2022 course by Dylan Cope and Lin Li
-
 from __future__ import absolute_import
 from __future__ import print_function
 
@@ -34,13 +10,7 @@ from pacman_utils import util
 
 
 class GameStateFeatures:
-    """
-    Wrapper class around a game state where you can extract
-    useful information for your Q-learning algorithm
 
-    WARNING: We will use this class to test your code, but the functionality
-    of this class will not be tested itself
-    """
 
     def __init__(self, state: GameState):
         """
@@ -74,20 +44,7 @@ class QLearnAgent(Agent):
                  gamma: float = 0.8,
                  maxAttempts: int = 30,
                  numTraining: int = 10):
-        """
-        These values are either passed from the command line (using -a alpha=0.5,...)
-        or are set to the default values above.
 
-        The given hyperparameters are suggestions and are not necessarily optimal
-        so feel free to experiment with them.
-
-        Args:
-            alpha: learning rate
-            epsilon: exploration rate
-            gamma: discount factor
-            maxAttempts: How many times to try each action in each state
-            numTraining: number of training episodes
-        """
         super().__init__()
         self.alpha = float(alpha)
         self.epsilon = float(epsilon)
@@ -132,8 +89,6 @@ class QLearnAgent(Agent):
     def getMaxAttempts(self) -> int:
         return self.maxAttempts
 
-    # WARNING: You will be tested on the functionality of this method
-    # DO NOT change the function signature
     @staticmethod
     def computeReward(startState: GameState,
                       endState: GameState) -> float:
@@ -150,8 +105,6 @@ class QLearnAgent(Agent):
         reward = endState.getScore() - startState.getScore()
         return reward
 
-    # WARNING: You will be tested on the functionality of this method
-    # DO NOT change the function signature
     def getQValue(self,
                   state: GameStateFeatures,
                   action: Directions) -> float:
@@ -166,8 +119,7 @@ class QLearnAgent(Agent):
         # Return the Q-value for the given state-action pair, or 0 if it doesn't exist
         return self.qValues.get((state, action), 0)
 
-    # WARNING: You will be tested on the functionality of this method
-    # DO NOT change the function signature
+
     def maxQValue(self, state: GameStateFeatures) -> float:
         """
         Args:
@@ -188,8 +140,7 @@ class QLearnAgent(Agent):
         # Return the maximum Q-value for the given state
         return max(q_values)
 
-    # WARNING: You will be tested on the functionality of this method
-    # DO NOT change the function signature
+
     def learn(self,
               state: GameStateFeatures,
               action: Directions,
@@ -222,8 +173,7 @@ class QLearnAgent(Agent):
         new_q_s_a = q_s_a + alpha * (reward + self.gamma * max_q_sp_ap - q_s_a)
         self.qValues[(state, action)] = new_q_s_a
 
-    # WARNING: You will be tested on the functionality of this method
-    # DO NOT change the function signature
+
     def updateCount(self,
                     state: GameStateFeatures,
                     action: Directions):
@@ -240,8 +190,7 @@ class QLearnAgent(Agent):
         else:  # If state-action pair not in dictionary, add it with count 1
             self.actionCounts[(state, action)] = 1
 
-    # WARNING: You will be tested on the functionality of this method
-    # DO NOT change the function signature
+
     def getCount(self,
                  state: GameStateFeatures,
                  action: Directions) -> int:
@@ -257,8 +206,7 @@ class QLearnAgent(Agent):
         # Return count for state-action pair. If it doesn't exist, return 0
         return self.actionCounts.get((state, action), 0)
 
-    # WARNING: You will be tested on the functionality of this method
-    # DO NOT change the function signature
+
     def explorationFn(self,
                       utility: float,
                       counts: int) -> float:
@@ -289,16 +237,9 @@ class QLearnAgent(Agent):
         else:  # When learning is done, don't factor in number of visits
             return utility
 
-    # WARNING: You will be tested on the functionality of this method
-    # DO NOT change the function signature
+
     def getAction(self, state: GameState) -> Directions:
         """
-        Choose an action to take to maximise reward while
-        balancing gathering data for learning
-
-        If you wish to use epsilon-greedy exploration, implement it in this method.
-        HINT: look at pacman_utils.util.flipCoin
-
         Args:
             state: the current state
 
